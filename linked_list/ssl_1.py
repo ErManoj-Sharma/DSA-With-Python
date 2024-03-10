@@ -124,6 +124,40 @@ class Sll:
                 return temp.item
             temp = temp.next
             i = i+1
+            
+    def isCircular(self):
+        if self.start is None:
+            return True
+        temp = self.start.next
+        while temp is not None:
+            if temp == self.start:
+                return True 
+            temp = temp.next
+        return False
+    
+    def findMid(self):
+        if self.start is None:
+            return -1
+
+        if self.start.next is None:
+            return self.start.item
+
+        fast = self.start 
+        slow = self.start 
+        while(fast is not None and fast.next is not None):
+            fast = fast.next.next
+            slow = slow.next
+        return slow.item
+    
+    def makeCircularLL(self):
+        if self.start is None:
+            return -1
+        if self.start.next is None:
+            self.start.next = self.start.next
+        temp = self.start 
+        while temp.next is not None:
+            temp = temp.next 
+        temp.next = self.start
 
 mylist = Sll()
 mylist.insert_at_start(10)
@@ -133,23 +167,41 @@ mylist.insert_at_start(30)
 mylist.insert_after_reference(mylist.search(20), 25)
 mylist.insert_after_value(25,35)
 
-# get count of linked list node
-count = mylist.get_count()
-print("Count: ",count)
+# define a circular linked list
+myCircularList = Sll()
+myCircularList.insert_at_start(10)
+myCircularList.insert_at_start(20)
+myCircularList.insert_at_start(30)
+myCircularList.makeCircularLL()
+# Note:  never print circular linked list
+# myCircularList.print_list()
 
-# get item at index of linked list (1 indexing)
-index = 3
-data = mylist.getNth(index)
-print(f"Data at index {index}: {data}")
 
+# # get count of linked list node
+# count = mylist.get_count()
+# print("Count: ",count)
 
-mylist.print_list()
+# # get item at index of linked list (1 indexing)
+# index = 3
+# data = mylist.getNth(index)
+# print(f"Data at index {index}: {data}")
+
+# # find mid element of linked list
+# data = mylist.findMid()
+# print("Mid Element of linked List: ",data)
+
+# # find wheather linked list is circular
+status = mylist.isCircular()
+print("Linked list is circular: ", status)
+
+status = myCircularList.isCircular()
+print("Linked list is circular: ", status)
+# mylist.print_list()
 
 # mylist.delete_start()
 # mylist.delete_last()
 # mylist.delete_item(25)
 # mylist.print_list()
-
 # # make a class iterable
 # for x in mylist:
 #     print(x, end=' ')
